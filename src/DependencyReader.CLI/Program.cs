@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DependencyReader.CLI
 {
@@ -17,7 +13,7 @@ namespace DependencyReader.CLI
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            // this should the  the single point where we 'new' things.
+            // this should be the single point where we 'new' things.
             // idealy, we could use a simplified IoC container.
             var runner = new Runner(
                 new ParamReader(),

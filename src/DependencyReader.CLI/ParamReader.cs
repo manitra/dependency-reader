@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DependencyReader.CLI
+﻿namespace DependencyReader.CLI
 {
     /// <summary>
     /// A utility parser which reads the raw command line arguments
