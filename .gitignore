@@ -1,0 +1,16 @@
+#generic file rules
+obj
+bin
+*.user
+*.suo
+cbs.log
+.idea
+deploy
+
+#packages
+packages
+node_modules
+bower_components
+
+#generated files
+
