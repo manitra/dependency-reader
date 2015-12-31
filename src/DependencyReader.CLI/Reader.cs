@@ -29,15 +29,11 @@ namespace DependencyReader.CLI
             loadedAssemblies.Add(name);
 
             var info = Load(assemblyFile);
-            foreach (var child in info.Item2)
+            foreach (var child in info.Children)
             {
                 yield return new DependencyInfo
                 {
-                    Parent = new AssemblyInfo
-                    {
-                        Name = info.Item1.Name,
-                        Version = info.Item1.Version.ToString()
-                    },
+                    Parent = info.Parent,
                     Child = new AssemblyInfo
                     {
                         Name = child.Name,
@@ -47,26 +43,48 @@ namespace DependencyReader.CLI
             }
         }
 
-        private Tuple<AssemblyName, AssemblyName[]> Load(string assemblyFile)
+        private AssemblyLoadingInfo Load(string assemblyFile)
         {
+            var result = new AssemblyLoadingInfo();
             try
             {
                 var parent = Assembly.ReflectionOnlyLoadFrom(assemblyFile);
-                return Tuple.Create(
-                    parent.GetName(),
-                    parent.GetReferencedAssemblies()
-                );
+                var parentName = parent.GetName();
+                result.Parent = new AssemblyInfo
+                {
+                    Name = parentName.Name,
+                    Version = parentName.Version.ToString()
+                };
+                result.Children = parent.GetReferencedAssemblies()
+                    .Select(a => new AssemblyInfo
+                    {
+                        Name = a.Name,
+                        Version = a.Version.ToString()
+                    })
+                    .ToArray();
             }
             catch (Exception ex)
             {
-                return Tuple.Create(
-                    new AssemblyName(Path.GetFileNameWithoutExtension(assemblyFile) + "-(native)") { Version = new Version(1, 0) },
-                    new[]
+                return new AssemblyLoadingInfo
+                {
+                    Parent = new AssemblyInfo
                     {
-                        new AssemblyName("(unknown)") { Version = new Version(1, 0) },
+                        Name = Path.GetFileNameWithoutExtension(assemblyFile) + "(native)",
+                        Version = "0.0.0.0"
+                    },
+                    Children = new []
+                    {
+                        new AssemblyInfo
+                        {
+                            Name = "(unknown)",
+                            Version = "0.0.0.0"
+                        },
                     }
-                );
+                };
             }
+
+            return result;
         }
+
     }
 }
