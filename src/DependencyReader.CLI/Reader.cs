@@ -28,18 +28,15 @@ namespace DependencyReader.CLI
             }
             loadedAssemblies.Add(name);
 
-            var parent = Assembly.ReflectionOnlyLoadFrom(assemblyFile);
-            var parentName = parent.GetName();
-            var children = parent.GetReferencedAssemblies();
-
-            foreach (var child in children)
+            var info = Load(assemblyFile);
+            foreach (var child in info.Item2)
             {
                 yield return new DependencyInfo
                 {
                     Parent = new AssemblyInfo
                     {
-                        Name = parentName.Name,
-                        Version = parentName.Version.ToString()
+                        Name = info.Item1.Name,
+                        Version = info.Item1.Version.ToString()
                     },
                     Child = new AssemblyInfo
                     {
@@ -47,6 +44,28 @@ namespace DependencyReader.CLI
                         Version = child.Version.ToString()
                     }
                 };
+            }
+        }
+
+        private Tuple<AssemblyName, AssemblyName[]> Load(string assemblyFile)
+        {
+            try
+            {
+                var parent = Assembly.ReflectionOnlyLoadFrom(assemblyFile);
+                return Tuple.Create(
+                    parent.GetName(),
+                    parent.GetReferencedAssemblies()
+                );
+            }
+            catch (Exception ex)
+            {
+                return Tuple.Create(
+                    new AssemblyName(Path.GetFileNameWithoutExtension(assemblyFile) + "-(native)") { Version = new Version(1, 0) },
+                    new[]
+                    {
+                        new AssemblyName("(unknown)") { Version = new Version(1, 0) },
+                    }
+                );
             }
         }
     }

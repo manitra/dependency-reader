@@ -33,7 +33,7 @@ namespace DependencyReader.CLI
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.ToString());
                 return 256;
             }
 
