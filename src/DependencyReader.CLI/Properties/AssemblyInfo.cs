@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DependencyReader.CLI")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A command line tool which dumps all the dependencies of .NET assemblies (*.dll or *.exe)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("DependencyReader.CLI")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
+[assembly: AssemblyCompany("Sweet Company")]
+[assembly: AssemblyProduct("DependencyReader")]
+[assembly: AssemblyCopyright("Copyright © Sweet Company 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
