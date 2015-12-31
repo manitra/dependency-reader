@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace DependencyReader.CLI
 {
@@ -7,32 +8,26 @@ namespace DependencyReader.CLI
     {
         public virtual IEnumerable<DependencyInfo> Read(string assemblyFile)
         {
-            yield return new DependencyInfo
+            var parent = Assembly.ReflectionOnlyLoadFrom(assemblyFile);
+            var parentName = parent.GetName();
+            var children = parent.GetReferencedAssemblies();
+
+            foreach (var child in children)
             {
-                Parent = new AssemblyInfo
+                yield return new DependencyInfo
                 {
-                    Name = assemblyFile.Substring(assemblyFile.LastIndexOf('\\')),
-                    Version = "1.0"
-                },
-                Child = new AssemblyInfo
-                {
-                    Name = "mscorlib",
-                    Version = "1.0.0.0"
-                }
-            };
-            yield return new DependencyInfo
-            {
-                Parent = new AssemblyInfo
-                {
-                    Name = assemblyFile.Substring(assemblyFile.LastIndexOf('\\')),
-                    Version = "1.0"
-                },
-                Child = new AssemblyInfo
-                {
-                    Name = "System.Data",
-                    Version = "1.0.1.0"
-                }
-            };
+                    Parent = new AssemblyInfo
+                    {
+                        Name = parentName.Name,
+                        Version = parentName.Version.ToString()
+                    },
+                    Child = new AssemblyInfo
+                    {
+                        Name = child.Name,
+                        Version = child.Version.ToString()
+                    }
+                };
+            }
         }
     }
 }
