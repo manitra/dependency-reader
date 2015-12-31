@@ -19,6 +19,7 @@ If the argument is ommited, the tool will start at the current folder `.` .
 
 ## Example
 
+Simplest example
 ```
 > dep
 
@@ -29,7 +30,17 @@ vshost32-12.0.0.0 Microsoft.VisualStudio.HostingProcess.Utilities.Sync-12.0.0.0
 vshost32-12.0.0.0 mscorlib-2.0.0.0
 ```
 
-# Build is yourself
+Combine it with other tool
+```
+> dep myproject/bin | grep -i reactive
+
+myproject-1.0.0.0 Reactive.Core-2.2.5.0
+myproject-1.0.0.0 Reactive.Linq-2.2.5.0
+Reactive.Linq-2.2.5.0 Reactive.Core-2.2.5.0
+```
+
+
+# Build it yourself
 
 Just get the source and build the solution
 
