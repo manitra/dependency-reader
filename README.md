@@ -20,14 +20,13 @@ If the argument is ommited, the tool will start at the current folder `.` .
 ## Example
 
 ```
-dep
-```
+> dep
 
-> dep-1.0.0.0 mscorlib-4.0.0.0
-> dep-1.0.0.0 System-4.0.0.0
-> vshost32-12.0.0.0 mscorlib-4.0.0.0
-> vshost32-12.0.0.0 Microsoft.VisualStudio.HostingProcess.Utilities.Sync-12.0.0.0
-> vshost32-12.0.0.0 mscorlib-2.0.0.0
+dep-1.0.0.0 mscorlib-4.0.0.0
+dep-1.0.0.0 System-4.0.0.0
+vshost32-12.0.0.0 mscorlib-4.0.0.0
+vshost32-12.0.0.0 Microsoft.VisualStudio.HostingProcess.Utilities.Sync-12.0.0.0
+vshost32-12.0.0.0 mscorlib-2.0.0.0
 
 # Build is yourself
 
