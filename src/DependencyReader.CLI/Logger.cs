@@ -6,7 +6,7 @@ namespace DependencyReader.CLI
     {
         public virtual void Log(string name, string version)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(name + " " + version);
         }
     }
 }
