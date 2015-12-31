@@ -27,6 +27,7 @@ dep-1.0.0.0 System-4.0.0.0
 vshost32-12.0.0.0 mscorlib-4.0.0.0
 vshost32-12.0.0.0 Microsoft.VisualStudio.HostingProcess.Utilities.Sync-12.0.0.0
 vshost32-12.0.0.0 mscorlib-2.0.0.0
+```
 
 # Build is yourself
 
@@ -50,3 +51,10 @@ xbuild src/DependencyReader.sln
 
 
 The output is the 'bin/[ Configuration ]' folder
+
+# Next steps
+
+Here some feature/bugfix to implement
+
+- handle multiple version of the same assembly
+- show indirect dependency (and add a third column for the path of the dependency)
