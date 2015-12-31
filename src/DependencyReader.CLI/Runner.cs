@@ -18,11 +18,12 @@
         public virtual Runner Execute(string[] args)
         {
             var param = paramReader.Read(args);
+
             foreach (var assemblyFile in fileEnumerator.Find("(exe|dll)$", param.TargetPath))
             {
                 foreach (var dependency in reader.Read(assemblyFile))
                 {
-                    logger.Log(dependency.Name, dependency.Version);
+                    logger.Log(dependency);
                 }
             }
 

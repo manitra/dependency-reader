@@ -10,7 +10,7 @@ namespace DependencyReader.CLI
 
             return new Parameters
             {
-                TargetPath = args[1]
+                TargetPath = args[0]
             };
         }
     }

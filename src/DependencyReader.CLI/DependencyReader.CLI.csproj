@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="DependencyInfo.cs" />
     <Compile Include="FileEnumerator.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Parameters.cs" />

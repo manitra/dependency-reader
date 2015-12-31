@@ -11,7 +11,7 @@ namespace DependencyReader.CLI
         {
             var matcher = new Regex(nameFilterRegex);
             var items = new Queue<string>();
-            items.Enqueue(targetPath);
+            items.Enqueue(Path.GetFullPath(targetPath));
 
             while (items.Count > 0)
             {
@@ -20,7 +20,7 @@ namespace DependencyReader.CLI
                 {
                     if (matcher.IsMatch(Path.GetFileName(item)))
                     {
-                        yield return Path.GetFullPath(targetPath);
+                        yield return item;
                     }
                 }
                 else if (Directory.Exists(item))
