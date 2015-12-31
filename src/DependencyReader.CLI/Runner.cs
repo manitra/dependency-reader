@@ -1,4 +1,6 @@
-﻿namespace DependencyReader.CLI
+﻿using System;
+
+namespace DependencyReader.CLI
 {
     public class Runner
     {
@@ -15,19 +17,27 @@
             this.logger = logger;
         }
 
-        public virtual Runner Execute(string[] args)
+        public virtual int Execute(string[] args)
         {
-            var param = paramReader.Read(args);
-
-            foreach (var assemblyFile in fileEnumerator.Find("(exe|dll)$", param.TargetPath))
+            try
             {
-                foreach (var dependency in reader.Read(assemblyFile))
+                var param = paramReader.Read(args);
+
+                foreach (var assemblyFile in fileEnumerator.Find("(exe|dll)$", param.TargetPath))
                 {
-                    logger.Log(dependency);
+                    foreach (var dependency in reader.Read(assemblyFile))
+                    {
+                        logger.Log(dependency);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
 
-            return this;
+                return 256;
+            }
+
+            return 0;
         }
     }
 }

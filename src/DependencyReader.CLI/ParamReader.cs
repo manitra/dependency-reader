@@ -6,11 +6,9 @@ namespace DependencyReader.CLI
     {
         public virtual Parameters Read(string[] args)
         {
-            if (args.Length < 1) throw new InvalidOperationException("Missing TargetPath");
-
             return new Parameters
             {
-                TargetPath = args[0]
+                TargetPath = args.Length > 0 ? args[0] : "."
             };
         }
     }
