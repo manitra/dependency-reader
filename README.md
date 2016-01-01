@@ -4,7 +4,7 @@ A command line tool which dumps all the dependencies of .NET assemblies (*.dll o
 # Download
 
 The latest binary is available here:
-http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/bin/Release/dep.exe
+http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe
 
 # Usage
 
