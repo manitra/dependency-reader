@@ -1,4 +1,4 @@
-# dependency-reader
+# dependency-reader [![Build Status](http://build.manitra.net/job/dependency-reader/badge/icon)](http://build.manitra.net/job/dependency-reader/)
 A command line tool which dumps all the dependencies of .NET assemblies (*.dll or *.exe)
 
 # Download
