@@ -1,10 +1,6 @@
 # dependency-reader [![Build Status](http://build.manitra.net/job/dependency-reader/badge/icon)](http://build.manitra.net/job/dependency-reader/)
-A command line tool which dumps all the dependencies of .NET assemblies (*.dll or *.exe)
-
-# Download
-
-The latest binary is available here:
-http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe
+A command line tool which dumps all the dependencies of .NET assemblies (*.dll or *.exe).
+The latest ready to use binary is available here: [dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe)
 
 # Usage
 
@@ -19,7 +15,7 @@ If the argument is ommited, the tool will start at the current folder `.` .
 
 ## Example
 
-Simplest example
+Hello world example
 ```
 > dep
 
@@ -30,7 +26,7 @@ vshost32-12.0.0.0 Microsoft.VisualStudio.HostingProcess.Utilities.Sync-12.0.0.0
 vshost32-12.0.0.0 mscorlib-2.0.0.0
 ```
 
-Combine it with other tool
+Combine it with other tools
 ```
 > dep myproject/bin | grep -i reactive
 
@@ -49,6 +45,7 @@ Just get the source and build the solution
 ```bash
 git clone https://github.com/manitra/dependency-reader.git
 cd dependency-reader
+nuget restore src/DependencyReader.sln
 msbuild src/DependencyReader.sln
 ```
 
@@ -57,6 +54,7 @@ msbuild src/DependencyReader.sln
 ```bash
 git clone https://github.com/manitra/dependency-reader.git
 cd dependency-reader
+mono nuget restore src/DependencyReader.sln
 xbuild src/DependencyReader.sln
 ```
 
