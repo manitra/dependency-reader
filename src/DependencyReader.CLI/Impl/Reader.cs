@@ -1,23 +1,26 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
+using DependencyReader.CLI.Entities;
 
-namespace DependencyReader.CLI
+namespace DependencyReader.CLI.Impl
 {
     /// <summary>
     /// This component is the actually dependency reader.
     /// </summary>
-    public class Reader
+    public class Reader : IReader
     {
         private readonly ISet<string> loadedAssemblies;
+        private readonly IPathUtility pathUtility;
 
         /// <summary>
         /// Construct a <see cref="Reader"/> object
         /// </summary>
-        public Reader()
+        public Reader(IPathUtility pathUtility)
         {
+            this.pathUtility = pathUtility;
+
             loadedAssemblies = new HashSet<string>(
                 AppDomain.CurrentDomain
                     .ReflectionOnlyGetAssemblies()
@@ -33,7 +36,7 @@ namespace DependencyReader.CLI
         /// <returns></returns>
         public virtual IEnumerable<DependencyInfo> Read(string assemblyFilePath)
         {
-            var name = Path.GetFileNameWithoutExtension(assemblyFilePath);
+            var name = pathUtility.GetFileNameWithoutExtension(assemblyFilePath);
             if (loadedAssemblies.Contains(name))
             {
                 yield break;
@@ -77,7 +80,7 @@ namespace DependencyReader.CLI
                 {
                     Parent = new AssemblyInfo
                     {
-                        Name = Path.GetFileNameWithoutExtension(assemblyFile) + "(native)",
+                        Name = pathUtility.GetFileNameWithoutExtension(assemblyFile) + "(native)",
                         Version = "0.0.0.0"
                     },
                     Children = new []

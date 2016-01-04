@@ -1,9 +1,9 @@
-namespace DependencyReader.CLI
+namespace DependencyReader.CLI.Entities
 {
     /// <summary>
     /// An entity which represent all the possible command line option of this tool
     /// </summary>
-    public class Parameters
+    public class CliParameters
     {
         /// <summary>
         /// The path where the tool will start to search for dll and exe files.

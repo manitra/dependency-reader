@@ -1,6 +1,9 @@
 ﻿using System.IO;
+using DependencyReader.CLI.Entities;
+using DependencyReader.CLI.Impl;
 using NUnit.Framework;
-namespace DependencyReader.CLI
+
+namespace DependencyReader.CLI.Tests
 {
     [TestFixture]
     public class LoggerTests

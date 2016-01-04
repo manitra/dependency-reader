@@ -1,11 +1,12 @@
-﻿using System.IO;
+using System.IO;
+using DependencyReader.CLI.Entities;
 
-namespace DependencyReader.CLI
+namespace DependencyReader.CLI.Impl
 {
     /// <summary>
     /// Formats entities for the end user
     /// </summary>
-    public class Logger
+    public class Logger : ILogger
     {
         private readonly TextWriter output;
 

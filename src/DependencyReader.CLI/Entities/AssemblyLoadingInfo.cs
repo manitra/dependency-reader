@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DependencyReader.CLI
+namespace DependencyReader.CLI.Entities
 {
     /// <summary>
     /// An entity which contains an <see cref="AssemblyInfo"/> along with

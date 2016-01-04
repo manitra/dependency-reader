@@ -1,4 +1,5 @@
 ﻿using System;
+using DependencyReader.CLI.Impl;
 
 namespace DependencyReader.CLI
 {
@@ -17,8 +18,13 @@ namespace DependencyReader.CLI
             // idealy, we could use a simplified IoC container.
             var runner = new Runner(
                 new ParamReader(),
-                new FileEnumerator(),
-                new Reader(),
+                new FileEnumerator(
+                    new FileSystem(),
+                    new PathUtility()
+                ),
+                new Reader(
+                    new PathUtility()
+                ),
                 new Logger(Console.Out),
                 Console.Out
             );

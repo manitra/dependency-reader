@@ -1,4 +1,4 @@
-﻿namespace DependencyReader.CLI
+﻿namespace DependencyReader.CLI.Entities
 {
     /// <summary>
     /// An entity which represent a direct dependency

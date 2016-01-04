@@ -1,19 +1,21 @@
-﻿namespace DependencyReader.CLI
+using DependencyReader.CLI.Entities;
+
+namespace DependencyReader.CLI.Impl
 {
     /// <summary>
     /// A utility parser which reads the raw command line arguments
-    /// and produces a <see cref="Parameters"/> object as output
+    /// and produces a <see cref="CliParameters"/> object as output
     /// </summary>
-    public class ParamReader
+    public class ParamReader : IParamReader
     {
         /// <summary>
         /// Parses the raw command line parameters
         /// </summary>
         /// <param name="args"></param>
-        /// <returns>A strongly typed <see cref="Parameters"/> object</returns>
-        public virtual Parameters Read(string[] args)
+        /// <returns>A strongly typed <see cref="CliParameters"/> object</returns>
+        public virtual CliParameters Read(string[] args)
         {
-            return new Parameters
+            return new CliParameters
             {
                 TargetPath = args.Length > 0 ? args[0] : "."
             };

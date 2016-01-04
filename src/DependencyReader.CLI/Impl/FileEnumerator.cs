@@ -1,14 +1,27 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Text.RegularExpressions;
+using DependencyReader.CLI.Entities;
 
-namespace DependencyReader.CLI
+namespace DependencyReader.CLI.Impl
 {
     /// <summary>
     /// A class which enumerates all the files matching a name filter inside a target path
     /// </summary>
-    public class FileEnumerator
+    public class FileEnumerator : IFileEnumerator
     {
+        private readonly IFileSystem fileSystem;
+        private readonly IPathUtility pathUtility;
+
+        /// <summary>
+        /// Constructs a <see cref="FileEnumerator"/>
+        /// </summary>
+        /// <param name="fileSystem"></param>
+        public FileEnumerator(IFileSystem fileSystem, IPathUtility pathUtility)
+        {
+            this.fileSystem = fileSystem;
+            this.pathUtility = pathUtility;
+        }
+
         /// <summary>
         /// Find all files in the target path whose name matches the given name filter.
         /// If the path points to a file, the method will return that file only.
@@ -23,21 +36,21 @@ namespace DependencyReader.CLI
         {
             var matcher = new Regex(nameFilterRegex);
             var items = new Queue<string>();
-            items.Enqueue(Path.GetFullPath(targetPath));
+            items.Enqueue(fileSystem.GetFullPath(targetPath));
 
             while (items.Count > 0)
             {
                 var item = items.Dequeue();
-                if (File.Exists(item))
+                if (fileSystem.FileExists(item))
                 {
-                    if (matcher.IsMatch(Path.GetFileName(item)))
+                    if (matcher.IsMatch(pathUtility.GetFileName(item)))
                     {
                         yield return item;
                     }
                 }
-                else if (Directory.Exists(item))
+                else if (fileSystem.DirectoryExists(item))
                 {
-                    foreach (var child in Directory.GetFileSystemEntries(item, "*", SearchOption.TopDirectoryOnly))
+                    foreach (var child in fileSystem.GetEntries(item, "*", SearchType.TopDirectoryOnly))
                     {
                         items.Enqueue(child);
                     }

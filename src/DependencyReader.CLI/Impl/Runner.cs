@@ -1,17 +1,17 @@
 ﻿using System;
 using System.IO;
 
-namespace DependencyReader.CLI
+namespace DependencyReader.CLI.Impl
 {
     /// <summary>
-    /// The orchestrator component
+    /// Orchestrates the dependency finding for a given path
     /// </summary>
-    public class Runner
+    public class Runner : IRunner
     {
-        private readonly ParamReader paramReader;
-        private readonly FileEnumerator fileEnumerator;
-        private readonly Reader reader;
-        private readonly Logger logger;
+        private readonly IParamReader paramReader;
+        private readonly IFileEnumerator fileEnumerator;
+        private readonly IReader reader;
+        private readonly ILogger logger;
         private readonly TextWriter stdOutput;
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace DependencyReader.CLI
         /// <param name="reader"></param>
         /// <param name="logger"></param>
         /// <param name="stdOutput"></param>
-        public Runner(ParamReader paramReader, FileEnumerator fileEnumerator, Reader reader, Logger logger, TextWriter stdOutput)
+        public Runner(IParamReader paramReader, IFileEnumerator fileEnumerator, IReader reader, ILogger logger, TextWriter stdOutput)
         {
             this.paramReader = paramReader;
             this.fileEnumerator = fileEnumerator;
