@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DependencyReader.CLI.Entities;
+﻿using System.Linq;
 using DependencyReader.CLI.Impl;
 using DependencyReader.CLI.Tests.Fakes;
 using Moq;
 using NUnit.Framework;
 
-namespace DependencyReader.CLI.Impl.Tests
+namespace DependencyReader.CLI.Tests.Impl
 {
     [TestFixture]
     public class FileEnumeratorTests

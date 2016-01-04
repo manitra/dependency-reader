@@ -1,7 +1,7 @@
 ﻿using DependencyReader.CLI.Impl;
 using NUnit.Framework;
 
-namespace DependencyReader.CLI.Tests
+namespace DependencyReader.CLI.Tests.Impl
 {
     [TestFixture]
     public class ParamReaderTests

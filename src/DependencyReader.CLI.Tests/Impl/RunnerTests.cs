@@ -5,7 +5,7 @@ using DependencyReader.CLI.Impl;
 using Moq;
 using NUnit.Framework;
 
-namespace DependencyReader.CLI.Tests
+namespace DependencyReader.CLI.Tests.Impl
 {
     [TestFixture]
     public class RunnerTests
