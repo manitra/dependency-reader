@@ -16,8 +16,8 @@ namespace DependencyReader.CLI.Impl
 
         public IEnumerable<DependencyInfo> Read(string assemblyFilePath)
         {
-            var direct = innerReader.Read(assemblyFilePath).ToArray();
-            var directMap = new Dictionary<AssemblyInfo, Node>(direct.Length);
+            var direct = innerReader.Read(assemblyFilePath);
+            var directMap = new Dictionary<AssemblyInfo, Node>();
             foreach (var dep in direct)
             {
                 if (!directMap.ContainsKey(dep.Parent))
@@ -29,22 +29,83 @@ namespace DependencyReader.CLI.Impl
                 {
                     directMap[dep.Child] = new Node(dep.Child);
                 }
-                
+
                 directMap[dep.Parent].Add(directMap[dep.Child]);
             }
 
-            return direct;
+            return GetBottomUpDeps(directMap.Values.Where(n => n.Children.Count == 0));
+        }
+
+        private IEnumerable<DependencyInfo> GetBottomUpDeps(IEnumerable<Node> leaves)
+        {
+            var todo = new Queue<Node>(leaves);
+
+            while (todo.Count > 0)
+            {
+                var current = todo.Dequeue();
+                foreach (var dep in GetDescendantDeps(current))
+                {
+                    yield return dep;
+                }
+
+                foreach (var parent in current.Parents)
+                    todo.Enqueue(parent);
+            }
+        }
+
+        private IEnumerable<DependencyInfo> GetDescendantDeps(Node ancestor)
+        {
+            var todo = new Queue<Node>(ancestor.Children);
+
+            while (todo.Count > 0)
+            {
+                var current = todo.Dequeue();
+                yield return new DependencyInfo
+                {
+                    Parent = ancestor.Key,
+                    Child = current.Key,
+                    Distance = CalculateDistance(ancestor, current)
+                };
+
+                foreach (var child in current.Children)
+                    todo.Enqueue(child);
+            }
+        }
+
+        private int CalculateDistance(Node parent, Node child)
+        {
+            var todo = new Queue<Tuple<Node, int>>();
+            todo.Enqueue(Tuple.Create(parent, 0));
+            
+            while (todo.Count > 0)
+            {
+                var current = todo.Dequeue();
+
+                if (current.Item1 == child)
+                {
+                    return current.Item2;
+                }
+
+                foreach (var c in current.Item1.Children)
+                {
+                    todo.Enqueue(Tuple.Create(c, current.Item2 + 1));
+                }
+            }
+
+            return -1;
         }
     }
 
     internal class Node
     {
+        private readonly List<Node> parents;
         private readonly AssemblyInfo key;
         private readonly List<Node> children;
 
         public Node(AssemblyInfo key)
         {
             this.key = key;
+            parents = new List<Node>();
             children = new List<Node>();
         }
 
@@ -53,8 +114,19 @@ namespace DependencyReader.CLI.Impl
             get { return this.key; }
         }
 
+        public IList<Node> Children
+        {
+            get { return children.AsReadOnly(); }
+        }
+
+        public IList<Node> Parents
+        {
+            get { return parents.AsReadOnly(); }
+        }
+
         public void Add(Node child)
         {
+            child.parents.Add(this);
             this.children.Add(child);
         }
     }

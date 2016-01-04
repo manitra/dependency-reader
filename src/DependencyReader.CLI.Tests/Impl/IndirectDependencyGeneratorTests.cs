@@ -48,7 +48,7 @@ namespace DependencyReader.CLI.Tests.Impl
                 new DependencyInfo
                 {
                     Parent = new AssemblyInfo { Name = "parent", Version = "1.0" },
-                    Child = new AssemblyInfo { Name = "chid", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "child", Version = "1.0" },
                     Distance = 1
                 }
             };
@@ -59,14 +59,14 @@ namespace DependencyReader.CLI.Tests.Impl
             Assert.AreEqual(3, result.Length);
             Assert.Contains(expected[0], result);
             Assert.Contains(expected[1], result);
-            Assert.AreEqual(
+            Assert.Contains(
                 new DependencyInfo
                 {
                     Parent = expected[0].Parent,
                     Child = expected[1].Child,
                     Distance = 2
-                } , 
-                result[0]
+                },
+                result
             );
         }
     }

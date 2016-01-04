@@ -22,8 +22,10 @@ namespace DependencyReader.CLI
                     new FileSystem(),
                     new PathUtility()
                 ),
-                new Reader(
-                    new PathUtility()
+                new IndirectDependencyGenerator(
+                    new Reader(
+                        new PathUtility()
+                    )
                 ),
                 new Logger(Console.Out),
                 Console.Out
