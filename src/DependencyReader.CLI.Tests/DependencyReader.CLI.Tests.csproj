@@ -58,6 +58,7 @@
     <Compile Include="Fakes\FileSystemItem.cs" />
     <Compile Include="Impl\LoggerTests.cs" />
     <Compile Include="Impl\ParamReaderTests.cs" />
+    <Compile Include="Impl\ReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Impl\RunnerTests.cs" />
   </ItemGroup>
@@ -69,6 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Binaries\console1.exe" />
+    <EmbeddedResource Include="Binaries\lib1.dll" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
