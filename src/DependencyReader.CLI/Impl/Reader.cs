@@ -49,7 +49,8 @@ namespace DependencyReader.CLI.Impl
                 yield return new DependencyInfo
                 {
                     Parent = info.Parent,
-                    Child = child
+                    Child = child,
+                    Distance = 1
                 };
             }
         }

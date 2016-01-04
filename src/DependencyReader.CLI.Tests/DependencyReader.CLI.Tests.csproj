@@ -57,6 +57,7 @@
     <Compile Include="Binaries\BinaryLocator.cs" />
     <Compile Include="Impl\FileEnumeratorTests.cs" />
     <Compile Include="Fakes\FileSystemItem.cs" />
+    <Compile Include="Impl\IndirectDependencyGeneratorTests.cs" />
     <Compile Include="Impl\LoggerTests.cs" />
     <Compile Include="Impl\ParamReaderTests.cs" />
     <Compile Include="Impl\ReaderTests.cs" />

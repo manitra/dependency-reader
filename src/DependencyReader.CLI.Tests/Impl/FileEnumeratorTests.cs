@@ -10,7 +10,7 @@ namespace DependencyReader.CLI.Tests.Impl
     public class FileEnumeratorTests
     {
         [Test]
-        public void FileEnumerator_Constructor_DoesNotThrow()
+        public void Constructor_DoesNotThrow()
         {
             Assert.DoesNotThrow(() =>
             {

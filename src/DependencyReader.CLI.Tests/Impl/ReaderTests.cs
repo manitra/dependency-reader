@@ -55,7 +55,7 @@ namespace DependencyReader.CLI.Tests.Impl
         // For some reason, the attribute is ignored when using Resharper 8.1
         // FixtureSetup is obsolete and ignored as well
         // TODO(manitra): find out why Resharper 8.1 ignore OneTimeSetUp and FixtureSetup attributes
-        //[OneTimeSetUp]
+        [OneTimeSetUp]
         public void StartUp()
         {
             var assembly = GetType().Assembly;
