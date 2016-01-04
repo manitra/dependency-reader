@@ -54,6 +54,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Binaries\BinaryLocator.cs" />
     <Compile Include="Impl\FileEnumeratorTests.cs" />
     <Compile Include="Fakes\FileSystemItem.cs" />
     <Compile Include="Impl\LoggerTests.cs" />
