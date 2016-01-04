@@ -16,7 +16,7 @@ namespace DependencyReader.CLI.Tests.Fakes
         {
         }
 
-        public FileSystemItem(FileSystemItem parent, string name)
+        private FileSystemItem(FileSystemItem parent, string name)
         {
             this.parent = parent;
             this.name = name;

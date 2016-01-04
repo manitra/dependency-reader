@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using DependencyReader.CLI.Entities;
 
 namespace DependencyReader.CLI.Impl
 {

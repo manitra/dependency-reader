@@ -2,6 +2,9 @@
 
 namespace DependencyReader.CLI.Impl
 {
+    /// <summary>
+    /// Implements <see cref="IPathUtility"/> using the usual static <see cref="Path"/> class.
+    /// </summary>
     public class PathUtility : IPathUtility
     {
         public string GetFileNameWithoutExtension(string path)

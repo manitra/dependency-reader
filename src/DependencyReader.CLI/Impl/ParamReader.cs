@@ -13,7 +13,7 @@ namespace DependencyReader.CLI.Impl
         /// </summary>
         /// <param name="args"></param>
         /// <returns>A strongly typed <see cref="CliParameters"/> object</returns>
-        public virtual CliParameters Read(string[] args)
+        public CliParameters Read(string[] args)
         {
             return new CliParameters
             {

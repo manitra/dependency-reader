@@ -34,7 +34,7 @@ namespace DependencyReader.CLI.Impl
         /// </summary>
         /// <param name="assemblyFilePath"></param>
         /// <returns></returns>
-        public virtual IEnumerable<DependencyInfo> Read(string assemblyFilePath)
+        public IEnumerable<DependencyInfo> Read(string assemblyFilePath)
         {
             var name = pathUtility.GetFileNameWithoutExtension(assemblyFilePath);
             if (loadedAssemblies.Contains(name))
@@ -89,7 +89,7 @@ namespace DependencyReader.CLI.Impl
                         {
                             Name = "(unknown)",
                             Version = "0.0.0.0"
-                        },
+                        }
                     }
                 };
             }

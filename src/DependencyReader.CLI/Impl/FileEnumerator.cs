@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using DependencyReader.CLI.Entities;
 
 namespace DependencyReader.CLI.Impl
 {
@@ -16,6 +15,7 @@ namespace DependencyReader.CLI.Impl
         /// Constructs a <see cref="FileEnumerator"/>
         /// </summary>
         /// <param name="fileSystem"></param>
+        /// <param name="pathUtility"></param>
         public FileEnumerator(IFileSystem fileSystem, IPathUtility pathUtility)
         {
             this.fileSystem = fileSystem;
@@ -32,7 +32,7 @@ namespace DependencyReader.CLI.Impl
         /// <param name="targetPath">The relative or absolute path to a file or a directory.  
         /// </param>
         /// <returns>ALl files within the target path whose name matches the <paramref name="nameFilterRegex"/></returns>
-        public virtual IEnumerable<string> Find(string nameFilterRegex, string targetPath)
+        public IEnumerable<string> Find(string nameFilterRegex, string targetPath)
         {
             var matcher = new Regex(nameFilterRegex);
             var items = new Queue<string>();

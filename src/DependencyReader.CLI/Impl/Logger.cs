@@ -23,7 +23,7 @@ namespace DependencyReader.CLI.Impl
         /// Formats a direct dependency for the end user
         /// </summary>
         /// <param name="dep"></param>
-        public virtual void Log(DependencyInfo dep)
+        public void Log(DependencyInfo dep)
         {
             output.WriteLine(
                 "{0}-{1} {2}-{3}",

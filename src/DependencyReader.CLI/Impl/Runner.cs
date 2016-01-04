@@ -36,7 +36,7 @@ namespace DependencyReader.CLI.Impl
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        public virtual int Execute(string[] args)
+        public int Execute(string[] args)
         {
             try
             {
