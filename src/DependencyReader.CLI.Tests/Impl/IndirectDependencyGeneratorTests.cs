@@ -69,5 +69,85 @@ namespace DependencyReader.CLI.Tests.Impl
                 result
             );
         }
+
+        [Test]
+        public void Read_DoubleParent_ReturnsTwo()
+        {
+            var expected = new[] {
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "dady", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "child", Version = "1.0" },
+                    Distance = 1
+                },
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "mummy", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "child", Version = "1.0" },
+                    Distance = 1
+                }
+            };
+            var target = new IndirectDependencyGenerator(Mock.Of<IReader>(o => o.Read(It.IsAny<string>()) == expected));
+
+            var result = target.Read("any").ToArray();
+
+            Assert.AreEqual(2, result.Length);
+            foreach (var row in expected)
+            {
+                Assert.Contains(row, result);
+            }
+        }
+
+        [Test]
+        public void Read_DoubleChildrenAndTransitive_ReturnsFive()
+        {
+            var expected = new[] {
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "gran-pa", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "parent", Version = "1.0" },
+                    Distance = 1
+                },
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "parent", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "boule", Version = "1.0" },
+                    Distance = 1
+                },
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "parent", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "bill", Version = "1.0" },
+                    Distance = 1
+                }
+            };
+            var target = new IndirectDependencyGenerator(Mock.Of<IReader>(o => o.Read(It.IsAny<string>()) == expected));
+
+            var result = target.Read("any").ToArray();
+
+            Assert.AreEqual(5, result.Length);
+            foreach (var row in expected)
+            {
+                Assert.Contains(row, result);
+            }
+            Assert.Contains(
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo {Name = "gran-pa", Version = "1.0"},
+                    Child = new AssemblyInfo {Name = "boule", Version = "1.0"},
+                    Distance = 2
+                },
+                result
+            );
+            Assert.Contains(
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "gran-pa", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "bill", Version = "1.0" },
+                    Distance = 2
+                },
+                result
+            );
+        }
     }
 }
