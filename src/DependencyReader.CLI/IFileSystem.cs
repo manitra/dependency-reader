@@ -1,4 +1,5 @@
-﻿using DependencyReader.CLI.Entities;
+﻿using System.Collections.Generic;
+using DependencyReader.CLI.Entities;
 
 namespace DependencyReader.CLI
 {
@@ -22,13 +23,11 @@ namespace DependencyReader.CLI
         bool DirectoryExists(string path);
 
         /// <summary>
-        /// Returns all the file system children of the given path including files and directories
+        /// Returns all the file system which are direct children of the given path including files and directories
         /// </summary>
         /// <param name="folderPath"></param>
-        /// <param name="namePattern"></param>
-        /// <param name="option"></param>
         /// <returns></returns>
-        string[] GetEntries(string folderPath, string namePattern, SearchType option);
+        IEnumerable<string> GetEntries(string folderPath);
         
         /// <summary>
         /// Resolve a relative url into its absolute form

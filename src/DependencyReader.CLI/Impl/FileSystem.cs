@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using DependencyReader.CLI.Entities;
 
 namespace DependencyReader.CLI.Impl
@@ -15,9 +16,9 @@ namespace DependencyReader.CLI.Impl
             return Directory.Exists(path);
         }
 
-        public string[] GetEntries(string folderPath, string namePattern, SearchType option)
+        public IEnumerable<string> GetEntries(string folderPath)
         {
-            return Directory.GetFileSystemEntries(folderPath, namePattern, (SearchOption)option);
+            return Directory.GetFileSystemEntries(folderPath, "*", SearchOption.TopDirectoryOnly);
         }
 
         public string GetFullPath(string relativePath)

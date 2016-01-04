@@ -50,7 +50,7 @@ namespace DependencyReader.CLI.Impl
                 }
                 else if (fileSystem.DirectoryExists(item))
                 {
-                    foreach (var child in fileSystem.GetEntries(item, "*", SearchType.TopDirectoryOnly))
+                    foreach (var child in fileSystem.GetEntries(item))
                     {
                         items.Enqueue(child);
                     }

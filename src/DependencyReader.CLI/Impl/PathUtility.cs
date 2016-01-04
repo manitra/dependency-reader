@@ -2,7 +2,7 @@
 
 namespace DependencyReader.CLI.Impl
 {
-    class PathUtility : IPathUtility
+    public class PathUtility : IPathUtility
     {
         public string GetFileNameWithoutExtension(string path)
         {
