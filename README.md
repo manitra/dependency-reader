@@ -1,14 +1,14 @@
 # dependency-reader [![Build Status](http://build.manitra.net/job/dependency-reader/badge/icon)](http://build.manitra.net/job/dependency-reader/)
-[dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe) is a command line tool which dumps all the dependencies of .NET assemblies (*.dll or *.exe files) to the standard output in a parsable way.
-It shows direct dependencies and indirect one.
+[dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe) is a command line tool which dumps all the dependencies of .NET assemblies (*.dll or *.exe files) to the standard output in a parsable format.
+It shows direct dependencies and indirect ones.
 If A depends on B and B depends on C, [dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe) will output
 
 - A depends on B with a distance of 1
 - B depends on C with a distance of 1
 - A depends on C with a distance of 2
 
-[dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe) has been designed to be focused on a single task an combinable with other command line tools like `grep` or `awk`.
-Have a look at the examples below.
+[dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe) has been designed to focus on a single task and be combinable with other command line tools like `grep` or `awk`.
+Have a look at the examples below for more info.
 
 
 The latest ready to use binary is available here: [dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe)
@@ -24,8 +24,16 @@ Download [dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessful
 dep [ file-path | dir-path ]
 ```
 
-This will recursively search for assemblies in the given path and output all the parent-child relation of assemblies.
+This will recursively search for assemblies in the given path and output all the parent-child dependencies of assemblies.
 If the argument is ommited, the tool will start at the current folder `.` .
+
+The format of the output is
+```
+assembly1-version1 dependency1-version1 distance
+```
+`assembly1` is an assembly which depends on `dependency1` which is another assembly.
+The distance between `assembly1` and `dependency1` is the minimum number of direct dependencies to follow to go from `assembly1` to `dependency1` using the dependency graph of the folder.
+
 
 ## Example
 
@@ -44,7 +52,7 @@ Combine it with other tools
 ```
 > dep myproject/bin | grep -i reactive
 
-myproject-1.0.0.0 Reactive.Core-2.2.5.0 2
+myproject-1.0.0.0 Reactive.Core-2.2.5.0 2 [Reactive.Linq-2.2.5.0]
 myproject-1.0.0.0 Reactive.Linq-2.2.5.0 1
 Reactive.Linq-2.2.5.0 Reactive.Core-2.2.5.0 1
 ```
