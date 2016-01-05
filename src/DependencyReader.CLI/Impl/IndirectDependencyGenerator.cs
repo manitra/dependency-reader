@@ -33,24 +33,9 @@ namespace DependencyReader.CLI.Impl
                 directMap[dep.Parent].Add(directMap[dep.Child]);
             }
 
-            return GetBottomUpDeps(directMap.Values.Where(n => n.Children.Count == 0));
-        }
-
-        private IEnumerable<DependencyInfo> GetBottomUpDeps(IEnumerable<Node> leaves)
-        {
-            var todo = new Queue<Node>(leaves);
-
-            while (todo.Count > 0)
-            {
-                var current = todo.Dequeue();
-                foreach (var dep in GetDescendantDeps(current))
-                {
-                    yield return dep;
-                }
-
-                foreach (var parent in current.Parents)
-                    todo.Enqueue(parent);
-            }
+            return directMap.Values
+                .Select(GetDescendantDeps)
+                .SelectMany(list => list);
         }
 
         private IEnumerable<DependencyInfo> GetDescendantDeps(Node ancestor)
