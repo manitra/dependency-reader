@@ -29,7 +29,7 @@ If the argument is ommited, the tool will start at the current folder `.` .
 
 The format of the output is
 ```
-assembly1-version1 dependency1-version1 distance
+assembly1-version1 dependency1-version1 distance [intermediate-dep1] [intermediate-dep2]
 ```
 `assembly1` is an assembly which depends on `dependency1` which is another assembly.
 The distance between `assembly1` and `dependency1` is the minimum number of direct dependencies to follow to go from `assembly1` to `dependency1` using the dependency graph of the folder.

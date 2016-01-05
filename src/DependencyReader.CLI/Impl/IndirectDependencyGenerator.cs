@@ -88,7 +88,7 @@ namespace DependencyReader.CLI.Impl
             {
                 this.Distance = parent.Distance + 1;
                 this.Path = parent.Path.ToList();
-                this.Path.Add(Node.Key);
+                this.Path.Add(parent.Node.Key);
 
                 return this;
             }
