@@ -12,7 +12,6 @@ namespace DependencyReader.CLI.Impl
     /// - A depends on B
     /// - B depends on C
     /// - A depends on C  (this is the newly created one)
-    /// 
     /// </summary>
     public class IndirectDependencyGenerator : IDependencyFilter
     {
@@ -34,86 +33,79 @@ namespace DependencyReader.CLI.Impl
                 directMap[dep.Parent].Add(directMap[dep.Child]);
             }
 
-            return directMap.Values
-                .Select(GetDescendantDeps)
-                .SelectMany(list => list);
+            return GetDescendantDeps(directMap.Values);
         }
 
-        private IEnumerable<DependencyInfo> GetDescendantDeps(Node ancestor)
+        private IEnumerable<DependencyInfo> GetDescendantDeps(IEnumerable<Node> parents)
         {
-            var todo = new Queue<Node>(ancestor.Children);
-
-            while (todo.Count > 0)
+            foreach (var parent in parents)
             {
-                var current = todo.Dequeue();
-                yield return new DependencyInfo
-                {
-                    Parent = ancestor.Key,
-                    Child = current.Key,
-                    Distance = CalculateDistance(ancestor, current)
-                };
+                var todo = parent.Children.ToDictionary(
+                    child => child.Key,
+                    child => new TraversingInfo(child, 1, false));
 
-                foreach (var child in current.Children)
-                    todo.Enqueue(child);
+                while (todo.Count > 0)
+                {
+                    var current = todo.First().Value;
+                    todo.Remove(current.Node.Key);
+
+                    yield return new DependencyInfo
+                    {
+                        Parent = parent.Key,
+                        Child = current.Node.Key,
+                        Distance = current.Distance
+                    };
+
+                    foreach (var child in current.Node.Children)
+                    {
+                        if (!todo.ContainsKey(child.Key))
+                        {
+                            todo.Add(child.Key, new TraversingInfo(child, current.Distance + 1, false));
+                        }
+                    }
+                }
+            }
+        }
+
+        class TraversingInfo
+        {
+            public Node Node;
+            public bool Visited;
+            public int Distance;
+
+            public TraversingInfo(Node node, int distance, bool visited)
+            {
+                this.Node = node;
+                Visited = visited;
+                Distance = distance;
             }
         }
 
-        private int CalculateDistance(Node parent, Node child)
+        class Node
         {
-            var todo = new Queue<Tuple<Node, int>>();
-            todo.Enqueue(Tuple.Create(parent, 0));
+            private readonly AssemblyInfo key;
+            private readonly List<Node> children;
 
-            while (todo.Count > 0)
+            public Node(AssemblyInfo key)
             {
-                var current = todo.Dequeue();
-
-                if (current.Item1 == child)
-                {
-                    return current.Item2;
-                }
-
-                foreach (var c in current.Item1.Children)
-                {
-                    todo.Enqueue(Tuple.Create(c, current.Item2 + 1));
-                }
+                this.key = key;
+                children = new List<Node>();
             }
 
-            return -1;
-        }
-    }
+            public AssemblyInfo Key
+            {
+                get { return this.key; }
+            }
 
-    internal class Node
-    {
-        private readonly List<Node> parents;
-        private readonly AssemblyInfo key;
-        private readonly List<Node> children;
+            public IList<Node> Children
+            {
+                get { return children.AsReadOnly(); }
+            }
 
-        public Node(AssemblyInfo key)
-        {
-            this.key = key;
-            parents = new List<Node>();
-            children = new List<Node>();
-        }
-
-        public AssemblyInfo Key
-        {
-            get { return this.key; }
-        }
-
-        public IList<Node> Children
-        {
-            get { return children.AsReadOnly(); }
-        }
-
-        public IList<Node> Parents
-        {
-            get { return parents.AsReadOnly(); }
-        }
-
-        public void Add(Node child)
-        {
-            child.parents.Add(this);
-            this.children.Add(child);
+            public void Add(Node child)
+            {
+                this.children.Add(child);
+            }
         }
     }
 }
