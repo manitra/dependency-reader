@@ -1,8 +1,22 @@
 # dependency-reader [![Build Status](http://build.manitra.net/job/dependency-reader/badge/icon)](http://build.manitra.net/job/dependency-reader/)
-A command line tool which dumps all the dependencies of .NET assemblies (*.dll or *.exe).
+[dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe) is a command line tool which dumps all the dependencies of .NET assemblies (*.dll or *.exe files) to the standard output in a parsable way.
+It show direct dependencies and also indirect dependencies.
+If A depends on B and B depends on C, [dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe) will output
+
+- A depends on B with a distance of 1
+- B depends on C with a distance of 1
+- A depends on C with a distance of 2
+
+[dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe) has been design to be focused on a single task an combinable with other command line tools like `grep` or `awk`.
+Have a look at the examples below.
+
+
 The latest ready to use binary is available here: [dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe)
 
 # Usage
+
+Download [dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe) first.
+
 
 ## Syntax
 
