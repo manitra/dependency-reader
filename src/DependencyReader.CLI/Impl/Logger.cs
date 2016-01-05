@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using DependencyReader.CLI.Entities;
 
@@ -25,7 +26,7 @@ namespace DependencyReader.CLI.Impl
         /// <param name="dep"></param>
         public void Log(DependencyInfo dep)
         {
-            output.WriteLine(
+            output.Write(
                 "{0}-{1} {2}-{3} {4}",
                 dep.Parent.Name,
                 dep.Parent.Version,
@@ -33,6 +34,13 @@ namespace DependencyReader.CLI.Impl
                 dep.Child.Version,
                 dep.Distance
             );
+
+            foreach (var part in dep.Path)
+            {
+                output.Write(" [{0}-{1}]", part.Name, part.Version);
+            }
+
+            output.Write(Environment.NewLine);
         }
     }
 }

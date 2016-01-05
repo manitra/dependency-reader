@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using DependencyReader.CLI.Entities;
 using DependencyReader.CLI.Impl;
-using Moq;
 using NUnit.Framework;
 
 namespace DependencyReader.CLI.Tests.Impl

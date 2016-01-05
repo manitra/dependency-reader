@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DependencyReader.CLI.Entities;
 
@@ -41,11 +40,11 @@ namespace DependencyReader.CLI.Impl
             foreach (var parent in parents)
             {
 
-                var result = parent.Children.ToDictionary(
+                var visited = parent.Children.ToDictionary(
                     child => child.Key,
-                    child => new TraversingInfo(child, 1, false));
+                    child => new TraversingInfo(child));
 
-                var todo = new Queue<TraversingInfo>(result.Values);
+                var todo = new Queue<TraversingInfo>(visited.Values);
 
                 while (todo.Count > 0)
                 {
@@ -55,15 +54,16 @@ namespace DependencyReader.CLI.Impl
                     {
                         Parent = parent.Key,
                         Child = current.Node.Key,
-                        Distance = current.Distance
+                        Distance = current.Distance,
+                        Path = current.Path
                     };
 
                     foreach (var child in current.Node.Children)
                     {
-                        if (!result.ContainsKey(child.Key))
+                        if (!visited.ContainsKey(child.Key))
                         {
-                            var item = new TraversingInfo(child, current.Distance + 1, false);
-                            result.Add(child.Key, item);
+                            var item = new TraversingInfo(child).SetParent(current);
+                            visited.Add(child.Key, item);
                             todo.Enqueue(item);
                         }
                     }
@@ -73,15 +73,24 @@ namespace DependencyReader.CLI.Impl
 
         class TraversingInfo
         {
-            public Node Node;
-            public bool Visited;
-            public int Distance;
+            public Node Node { get; private set; }
+            public int Distance { get; private set; }
+            public IList<AssemblyInfo> Path { get; private set; }
 
-            public TraversingInfo(Node node, int distance, bool visited)
+            public TraversingInfo(Node node)
             {
                 this.Node = node;
-                Visited = visited;
-                Distance = distance;
+                Distance = 1;
+                Path = new List<AssemblyInfo>();
+            }
+
+            public TraversingInfo SetParent(TraversingInfo parent)
+            {
+                this.Distance = parent.Distance + 1;
+                this.Path = parent.Path.ToList();
+                this.Path.Add(Node.Key);
+
+                return this;
             }
         }
 

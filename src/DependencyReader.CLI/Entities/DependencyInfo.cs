@@ -1,4 +1,6 @@
-﻿namespace DependencyReader.CLI.Entities
+﻿using System.Collections.Generic;
+
+namespace DependencyReader.CLI.Entities
 {
     /// <summary>
     /// An entity which represent a direct dependency
@@ -21,15 +23,17 @@
         /// </summary>
         public int Distance { get; set; }
 
+        /// <summary>
+        /// Contains an ordered list of all the assembly between <see cref="Parent"/> and <see cref="Child"/>
+        /// </summary>
+        public IList<AssemblyInfo> Path { get; set; }
+
         public override bool Equals(object obj)
         {
-            var other = obj as DependencyInfo;
-            if (other == null) return false;
-
-            return
-                Equals(Parent, other.Parent)
-                && Equals(Child, other.Child)
-                && Equals(Distance, other.Distance);
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((DependencyInfo) obj);
         }
 
         public override int GetHashCode()
@@ -37,8 +41,9 @@
             unchecked
             {
                 int hashCode = (Parent != null ? Parent.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (Child != null ? Child.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ Distance;
+                hashCode = (hashCode*397) ^ (Child != null ? Child.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ Distance;
+                hashCode = (hashCode*397) ^ (Path != null ? Path.GetHashCode() : 0);
                 return hashCode;
             }
         }
@@ -46,6 +51,11 @@
         public override string ToString()
         {
             return string.Format("{0} {1} {2}", Parent, Child, Distance);
+        }
+
+        protected bool Equals(DependencyInfo other)
+        {
+            return Equals(Parent, other.Parent) && Equals(Child, other.Child) && Distance == other.Distance && Equals(Path, other.Path);
         }
     }
 }

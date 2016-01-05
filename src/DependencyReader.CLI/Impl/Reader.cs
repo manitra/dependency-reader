@@ -50,7 +50,8 @@ namespace DependencyReader.CLI.Impl
                 {
                     Parent = info.Parent,
                     Child = child,
-                    Distance = 1
+                    Distance = 1,
+                    Path = new List<AssemblyInfo>()
                 };
             }
         }
