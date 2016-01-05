@@ -4,19 +4,19 @@ using DependencyReader.CLI.Impl;
 namespace DependencyReader.CLI
 {
     /// <summary>
-    /// This is the entry point of the tool
+    /// Entry point of the CLI
     /// </summary>
     class Program
     {
         /// <summary>
-        /// Entry point method
+        /// Entry point of the CLI
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
             // this should be the single point where we 'new' things.
             // idealy, we could use a simplified IoC container.
-            var runner = new Runner(
+            new Runner(
                 new ParamReader(),
                 new FileEnumerator(
                     new FileSystem(),
@@ -29,8 +29,7 @@ namespace DependencyReader.CLI
                 ),
                 new Logger(Console.Out),
                 Console.Out
-            );
-            runner.Execute(args);
+            ).Execute(args);
         }
     }
 }

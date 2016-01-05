@@ -32,7 +32,7 @@ namespace DependencyReader.CLI.Tests.Impl
             var result = target.Find("tone$", ".").ToArray();
 
             Assert.AreEqual(1, result.Length);
-            Assert.IsTrue(result.First().EndsWith("/ring-tone"));
+            Assert.AreEqual("/ring-tone", result.First());
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace DependencyReader.CLI.Tests.Impl
             var result = target.Find(".*", "ring-tone").ToArray();
 
             Assert.AreEqual(1, result.Length);
-            Assert.IsTrue(result.First().EndsWith("/ring-tone"));
+            Assert.AreEqual("/ring-tone", result.First());
         }
 
         [Test]
@@ -76,8 +76,8 @@ namespace DependencyReader.CLI.Tests.Impl
             var result = target.Find(".*", "phones").ToArray();
 
             Assert.AreEqual(2, result.Length);
-            Assert.IsTrue(result[0].EndsWith("/iphone"));
-            Assert.IsTrue(result[1].EndsWith("/android"));
+            Assert.AreEqual("/phones/iphone", result[0]);
+            Assert.AreEqual("/phones/android", result[1]);
         }
     }
 }
