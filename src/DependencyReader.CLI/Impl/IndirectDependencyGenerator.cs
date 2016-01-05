@@ -40,14 +40,16 @@ namespace DependencyReader.CLI.Impl
         {
             foreach (var parent in parents)
             {
-                var todo = parent.Children.ToDictionary(
+
+                var result = parent.Children.ToDictionary(
                     child => child.Key,
                     child => new TraversingInfo(child, 1, false));
 
+                var todo = new Queue<TraversingInfo>(result.Values);
+
                 while (todo.Count > 0)
                 {
-                    var current = todo.First().Value;
-                    todo.Remove(current.Node.Key);
+                    var current = todo.Dequeue();
 
                     yield return new DependencyInfo
                     {
@@ -58,9 +60,11 @@ namespace DependencyReader.CLI.Impl
 
                     foreach (var child in current.Node.Children)
                     {
-                        if (!todo.ContainsKey(child.Key))
+                        if (!result.ContainsKey(child.Key))
                         {
-                            todo.Add(child.Key, new TraversingInfo(child, current.Distance + 1, false));
+                            var item = new TraversingInfo(child, current.Distance + 1, false);
+                            result.Add(child.Key, item);
+                            todo.Enqueue(item);
                         }
                     }
                 }
