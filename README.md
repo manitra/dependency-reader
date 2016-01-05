@@ -65,5 +65,6 @@ The output is the 'bin/[ Configuration ]' folder
 
 Here some feature/bugfix to implement
 
+- use multiple threads
 - handle multiple version of the same assembly
-- show indirect dependency (and add a third column for the path of the dependency)
+- [DONE 0.2.0] show indirect dependency (and add a third column for the path of the dependency)
