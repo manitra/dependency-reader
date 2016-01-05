@@ -33,20 +33,20 @@ Hello world example
 ```
 > dep
 
-dep-1.0.0.0 mscorlib-4.0.0.0
-dep-1.0.0.0 System-4.0.0.0
-vshost32-12.0.0.0 mscorlib-4.0.0.0
-vshost32-12.0.0.0 Microsoft.VisualStudio.HostingProcess.Utilities.Sync-12.0.0.0
-vshost32-12.0.0.0 mscorlib-2.0.0.0
+dep-1.0.0.0 mscorlib-4.0.0.0 1
+dep-1.0.0.0 System-4.0.0.0 1
+vshost32-12.0.0.0 mscorlib-4.0.0.0 1
+vshost32-12.0.0.0 Microsoft.VisualStudio.HostingProcess.Utilities.Sync-12.0.0.0 1
+vshost32-12.0.0.0 mscorlib-2.0.0.0 1
 ```
 
 Combine it with other tools
 ```
 > dep myproject/bin | grep -i reactive
 
-myproject-1.0.0.0 Reactive.Core-2.2.5.0
-myproject-1.0.0.0 Reactive.Linq-2.2.5.0
-Reactive.Linq-2.2.5.0 Reactive.Core-2.2.5.0
+myproject-1.0.0.0 Reactive.Core-2.2.5.0 2
+myproject-1.0.0.0 Reactive.Linq-2.2.5.0 1
+Reactive.Linq-2.2.5.0 Reactive.Core-2.2.5.0 1
 ```
 
 

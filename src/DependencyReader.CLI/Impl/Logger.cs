@@ -26,7 +26,7 @@ namespace DependencyReader.CLI.Impl
         public void Log(DependencyInfo dep)
         {
             output.WriteLine(
-                "{0}-{1} {4} {2}-{3}",
+                "{0}-{1} {2}-{3} {4}",
                 dep.Parent.Name,
                 dep.Parent.Version,
                 dep.Child.Name,
