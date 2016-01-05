@@ -133,8 +133,8 @@ namespace DependencyReader.CLI.Tests.Impl
             Assert.Contains(
                 new DependencyInfo
                 {
-                    Parent = new AssemblyInfo {Name = "gran-pa", Version = "1.0"},
-                    Child = new AssemblyInfo {Name = "boule", Version = "1.0"},
+                    Parent = new AssemblyInfo { Name = "gran-pa", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "boule", Version = "1.0" },
                     Distance = 2
                 },
                 result
@@ -145,6 +145,85 @@ namespace DependencyReader.CLI.Tests.Impl
                     Parent = new AssemblyInfo { Name = "gran-pa", Version = "1.0" },
                     Child = new AssemblyInfo { Name = "bill", Version = "1.0" },
                     Distance = 2
+                },
+                result
+            );
+        }
+
+        [Test]
+        public void Read_LongTransitiveChain_ReturnsCorrectNumberOfDeps()
+        {
+            var expected = new[] {
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "a1", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "a2", Version = "1.0" },
+                    Distance = 1
+                },
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "a2", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "a3", Version = "1.0" },
+                    Distance = 1
+                },
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "a3", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "a4", Version = "1.0" },
+                    Distance = 1
+                },
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "a4", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "a5", Version = "1.0" },
+                    Distance = 1
+                },
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "a5", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "a6", Version = "1.0" },
+                    Distance = 1
+                },
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "a6", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "a7", Version = "1.0" },
+                    Distance = 1
+                },
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "a7", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "a8", Version = "1.0" },
+                    Distance = 1
+                },
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "a8", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "a9", Version = "1.0" },
+                    Distance = 1
+                },
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "a9", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "a10", Version = "1.0" },
+                    Distance = 1
+                },
+            };
+            var target = new IndirectDependencyGenerator(Mock.Of<IReader>(o => o.Read(It.IsAny<string>()) == expected));
+
+            var result = target.Read("any").ToArray();
+
+            Assert.AreEqual((expected.Length * expected.Length) / 2.0 + expected.Length / 2.0, result.Length);
+            foreach (var row in expected)
+            {
+                Assert.Contains(row, result);
+            }
+            Assert.Contains(
+                new DependencyInfo
+                {
+                    Parent = new AssemblyInfo { Name = "a1", Version = "1.0" },
+                    Child = new AssemblyInfo { Name = "a10", Version = "1.0" },
+                    Distance = 9
                 },
                 result
             );
