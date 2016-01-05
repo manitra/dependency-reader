@@ -5,20 +5,21 @@ using DependencyReader.CLI.Entities;
 
 namespace DependencyReader.CLI.Impl
 {
-    public class IndirectDependencyGenerator : IReader
+    /// <summary>
+    /// This filter actually adds dependencies and skip none of the given input.
+    /// It generates all the indirect dependencies which are deduced using transitivity
+    /// If A depends on B and B depends on C then this implementation will yield
+    /// - A depends on B
+    /// - B depends on C
+    /// - A depends on C  (this is the newly created one)
+    /// 
+    /// </summary>
+    public class IndirectDependencyGenerator : IDependencyFilter
     {
-        private readonly IReader innerReader;
-
-        public IndirectDependencyGenerator(IReader innerReader)
+        public IEnumerable<DependencyInfo> Filter(IEnumerable<DependencyInfo> input)
         {
-            this.innerReader = innerReader;
-        }
-
-        public IEnumerable<DependencyInfo> Read(string assemblyFilePath)
-        {
-            var direct = innerReader.Read(assemblyFilePath);
             var directMap = new Dictionary<AssemblyInfo, Node>();
-            foreach (var dep in direct)
+            foreach (var dep in input)
             {
                 if (!directMap.ContainsKey(dep.Parent))
                 {
@@ -61,7 +62,7 @@ namespace DependencyReader.CLI.Impl
         {
             var todo = new Queue<Tuple<Node, int>>();
             todo.Enqueue(Tuple.Create(parent, 0));
-            
+
             while (todo.Count > 0)
             {
                 var current = todo.Dequeue();

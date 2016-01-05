@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace DependencyReader.CLI.Impl
 {
@@ -11,6 +12,7 @@ namespace DependencyReader.CLI.Impl
         private readonly IParamReader paramReader;
         private readonly IFileEnumerator fileEnumerator;
         private readonly IReader reader;
+        private readonly IDependencyFilter filter;
         private readonly ILogger logger;
         private readonly TextWriter stdOutput;
 
@@ -20,13 +22,15 @@ namespace DependencyReader.CLI.Impl
         /// <param name="paramReader"></param>
         /// <param name="fileEnumerator"></param>
         /// <param name="reader"></param>
+        /// <param name="filter"></param>
         /// <param name="logger"></param>
         /// <param name="stdOutput"></param>
-        public Runner(IParamReader paramReader, IFileEnumerator fileEnumerator, IReader reader, ILogger logger, TextWriter stdOutput)
+        public Runner(IParamReader paramReader, IFileEnumerator fileEnumerator, IReader reader, IDependencyFilter filter, ILogger logger, TextWriter stdOutput)
         {
             this.paramReader = paramReader;
             this.fileEnumerator = fileEnumerator;
             this.reader = reader;
+            this.filter = filter;
             this.logger = logger;
             this.stdOutput = stdOutput;
         }
@@ -42,12 +46,14 @@ namespace DependencyReader.CLI.Impl
             {
                 var param = paramReader.Read(args);
 
-                foreach (var assemblyFile in fileEnumerator.Find("(exe|dll)$", param.TargetPath))
+                var rows = fileEnumerator
+                    .Find("(exe|dll)$", param.TargetPath)
+                    .Select(reader.Read)
+                    .SelectMany(list => list);
+
+                foreach (var dependency in filter.Filter(rows))
                 {
-                    foreach (var dependency in reader.Read(assemblyFile))
-                    {
-                        logger.Log(dependency);
-                    }
+                    logger.Log(dependency);
                 }
             }
             catch (Exception ex)

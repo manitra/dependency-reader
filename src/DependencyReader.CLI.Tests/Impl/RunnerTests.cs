@@ -19,6 +19,7 @@ namespace DependencyReader.CLI.Tests.Impl
                 Mock.Of<IParamReader>(o => o.Read(It.IsAny<string[]>()) == new CliParameters { TargetPath = "" }),
                 Mock.Of<IFileEnumerator>(o => o.Find(It.IsAny<string>(), It.IsAny<string>()) == new[] { "" }),
                 Mock.Of<IReader>(o => o.Read(It.IsAny<string>()) == deps),
+                Mock.Of<IDependencyFilter>(o => o.Filter(deps) == deps),
                 logger.Object,
                 Mock.Of<TextWriter>()
             );
@@ -38,12 +39,12 @@ namespace DependencyReader.CLI.Tests.Impl
             var buggyParamReader = new Mock<IParamReader>(); buggyParamReader
                 .Setup(o => o.Read(It.IsAny<string[]>()))
                 .Throws(new Exception("Bim"));
-            var logger = new Mock<ILogger>();
             var target = new Runner(
                 buggyParamReader.Object,
                 Mock.Of<IFileEnumerator>(),
                 Mock.Of<IReader>(),
-                logger.Object,
+                Mock.Of<IDependencyFilter>(),
+                Mock.Of<ILogger>(),
                 Mock.Of<TextWriter>()
             );
 

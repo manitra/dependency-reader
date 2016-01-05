@@ -14,7 +14,7 @@ namespace DependencyReader.CLI.Tests.Impl
         {
             Assert.DoesNotThrow(() =>
             {
-                new IndirectDependencyGenerator(Mock.Of<IReader>());
+                new IndirectDependencyGenerator();
             });
         }
 
@@ -27,9 +27,9 @@ namespace DependencyReader.CLI.Tests.Impl
                 Child = new AssemblyInfo { Name = "chid", Version = "1.0" },
                 Distance = 1
             };
-            var target = new IndirectDependencyGenerator(Mock.Of<IReader>(o => o.Read(It.IsAny<string>()) == new[] { expected }));
+            var target = new IndirectDependencyGenerator();
 
-            var result = target.Read("any").ToArray();
+            var result = target.Filter(new[] { expected }).ToArray();
 
             Assert.AreEqual(1, result.Length);
             Assert.AreEqual(expected, result[0]);
@@ -52,9 +52,9 @@ namespace DependencyReader.CLI.Tests.Impl
                     Distance = 1
                 }
             };
-            var target = new IndirectDependencyGenerator(Mock.Of<IReader>(o => o.Read(It.IsAny<string>()) == expected));
+            var target = new IndirectDependencyGenerator();
 
-            var result = target.Read("any").ToArray();
+            var result = target.Filter(expected).ToArray();
 
             Assert.AreEqual(3, result.Length);
             Assert.Contains(expected[0], result);
@@ -87,9 +87,9 @@ namespace DependencyReader.CLI.Tests.Impl
                     Distance = 1
                 }
             };
-            var target = new IndirectDependencyGenerator(Mock.Of<IReader>(o => o.Read(It.IsAny<string>()) == expected));
+            var target = new IndirectDependencyGenerator();
 
-            var result = target.Read("any").ToArray();
+            var result = target.Filter(expected).ToArray();
 
             Assert.AreEqual(2, result.Length);
             foreach (var row in expected)
@@ -121,9 +121,9 @@ namespace DependencyReader.CLI.Tests.Impl
                     Distance = 1
                 }
             };
-            var target = new IndirectDependencyGenerator(Mock.Of<IReader>(o => o.Read(It.IsAny<string>()) == expected));
+            var target = new IndirectDependencyGenerator();
 
-            var result = target.Read("any").ToArray();
+            var result = target.Filter(expected).ToArray();
 
             Assert.AreEqual(5, result.Length);
             foreach (var row in expected)
@@ -209,9 +209,9 @@ namespace DependencyReader.CLI.Tests.Impl
                     Distance = 1
                 },
             };
-            var target = new IndirectDependencyGenerator(Mock.Of<IReader>(o => o.Read(It.IsAny<string>()) == expected));
+            var target = new IndirectDependencyGenerator();
 
-            var result = target.Read("any").ToArray();
+            var result = target.Filter(expected).ToArray();
 
             Assert.AreEqual((expected.Length * expected.Length) / 2.0 + expected.Length / 2.0, result.Length);
             foreach (var row in expected)
