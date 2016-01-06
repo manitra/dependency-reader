@@ -57,6 +57,14 @@ myproject-1.0.0.0 Reactive.Linq-2.2.5.0 1
 Reactive.Linq-2.2.5.0 Reactive.Core-2.2.5.0 1
 ```
 
+Go Berserk! and detect assemblies in more than one version
+```
+> dep | awk -F'[- ]' '{ print $1 " " $2; print $3 " " $4 }' | awk '{ if (length(first[$1]) == 0) first[$1] = $2; if (first[$1] != $2) errors[$1] = $1; }  END{ for(e in errors) print e } '
+
+System.Web.Http.WebHost    
+System.Web.Http            
+System                     
+```
 
 # Build it yourself
 
