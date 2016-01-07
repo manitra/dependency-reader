@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using DependencyReader.CLI.Entities;
 using DependencyReader.CLI.Impl;
+using Moq;
 using NUnit.Framework;
 
 namespace DependencyReader.CLI.Tests.Impl
@@ -19,7 +20,7 @@ namespace DependencyReader.CLI.Tests.Impl
                     Child = new AssemblyInfo{ Name="child1", Version = "2.0"},
                 };
 
-                var target = new Logger(writer);
+                var target = new Logger(writer, Mock.Of<IStyleManager>());
                 target.Log(entity);
                 var result = writer.ToString();
 

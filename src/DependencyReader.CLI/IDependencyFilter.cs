@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using DependencyReader.CLI.Entities;
 
-namespace DependencyReader.CLI.Impl
+namespace DependencyReader.CLI
 {
     /// <summary>
     /// Filter a list of <see cref="DependencyInfo"/>.

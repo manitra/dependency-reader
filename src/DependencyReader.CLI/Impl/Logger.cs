@@ -11,14 +11,17 @@ namespace DependencyReader.CLI.Impl
     public class Logger : ILogger
     {
         private readonly TextWriter output;
+        private readonly IStyleManager style;
 
         /// <summary>
         /// Construct a <see cref="Logger"/> with the given output text writer
         /// </summary>
         /// <param name="output"></param>
-        public Logger(TextWriter output)
+        /// <param name="style"></param>
+        public Logger(TextWriter output, IStyleManager style)
         {
             this.output = output;
+            this.style = style;
         }
 
         /// <summary>
@@ -27,42 +30,94 @@ namespace DependencyReader.CLI.Impl
         /// <param name="dep"></param>
         public void Log(DependencyInfo dep)
         {
-            output.Write(
-                "{0} {1} {2} {3} {4} {5}",
-                dep.Parent.Name,
-                dep.Parent.Version,
-                VisualDistance(dep.Distance),
-                dep.Child.Name,
-                dep.Child.Version,
-                dep.Distance
-            );
+            Assembly(dep.Parent);
+            Separator();
+            VisualDistance(dep.Distance);
+            Separator();
+            Assembly(dep.Child);
+            Separator();
+            using (The(Style.Primary, StyleGroup.Alternative))
+                output.Write(dep.Distance);
 
             if (dep.Path.Count > 0)
             {
-                output.Write(" ( ");
+                Separator();
+                using (The(Style.Primary))
+                    output.Write("(");
             }
 
             foreach (var part in dep.Path)
             {
-                output.Write(" {0} {1}", part.Name, part.Version);
+                Separator();
+                Assembly(part);
             }
 
             if (dep.Path.Count > 0)
             {
-                output.Write(" )");
+                Separator();
+                using (The(Style.Primary))
+                    output.Write(")");
             }
 
+            NewLine();
+        }
+
+
+        private void Assembly(AssemblyInfo assembly)
+        {
+            using (The(Style.Primary))
+            {
+                output.Write(assembly.Name);
+            }
+
+            Separator();
+
+            output.Write(assembly.Version);
+        }
+
+        private void VisualDistance(int distance)
+        {
+            using (The(Style.Primary, StyleGroup.Alternative))
+            {
+                for (int i = 0; i < distance; i++)
+                {
+                    output.Write(">");
+                }
+            }
+        }
+
+        private StyleReset The(Style style, StyleGroup group = StyleGroup.Normal)
+        {
+            return new StyleReset(style, group, this.style);
+        }
+
+        private void NewLine()
+        {
             output.Write(Environment.NewLine);
         }
 
-        private string VisualDistance(int distance)
+        private void Separator()
         {
-            var result = new StringBuilder(distance);
-            for (int i = 0; i < distance; i++)
+            output.Write(" ");
+        }
+
+        /// <summary>
+        /// small utility class to ensure that style is always reset to default
+        /// </summary>
+        class StyleReset : IDisposable
+        {
+            private readonly IStyleManager style;
+
+            public StyleReset(Style style, StyleGroup group, IStyleManager styleMgr)
             {
-                result.Append(">");
+                this.style = styleMgr;
+                this.style.Set(style, group);
             }
-            return result.ToString();
+
+            public void Dispose()
+            {
+                style.Set(Style.Normal, StyleGroup.Normal);
+            }
         }
     }
 }

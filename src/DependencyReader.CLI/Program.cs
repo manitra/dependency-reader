@@ -26,7 +26,9 @@ namespace DependencyReader.CLI
                     new PathUtility()
                 ),
                 new IndirectDependencyGenerator(),
-                new Logger(Console.Out),
+                new Logger(
+                    Console.Out,
+                    new StyleManager()),
                 Console.Out
             ).Execute(args);
         }
