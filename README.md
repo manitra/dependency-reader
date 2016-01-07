@@ -41,25 +41,25 @@ Hello world example
 ```
 > dep
 
-dep-1.0.0.0 mscorlib-4.0.0.0 1
-dep-1.0.0.0 System-4.0.0.0 1
-vshost32-12.0.0.0 mscorlib-4.0.0.0 1
-vshost32-12.0.0.0 Microsoft.VisualStudio.HostingProcess.Utilities.Sync-12.0.0.0 1
-vshost32-12.0.0.0 mscorlib-2.0.0.0 1
+dep 1.0.0.0 > mscorlib 4.0.0.0 1
+dep 1.0.0.0 > System 4.0.0.0 1
+vshost32 12.0.0.0 > mscorlib 4.0.0.0 1
+vshost32 12.0.0.0 > Microsoft.VisualStudio.HostingProcess.Utilities.Sync 12.0.0.0 1
+vshost32 12.0.0.0 > mscorlib 2.0.0.0 1
 ```
 
 Combine it with other tools
 ```
 > dep myproject/bin | grep -i reactive
 
-myproject-1.0.0.0 Reactive.Core-2.2.5.0 2 [Reactive.Linq-2.2.5.0]
-myproject-1.0.0.0 Reactive.Linq-2.2.5.0 1
-Reactive.Linq-2.2.5.0 Reactive.Core-2.2.5.0 1
+myproject 1.0.0.0 >> Reactive.Core 2.2.5.0 2 ( Reactive.Linq 2.2.5.0 )
+myproject 1.0.0.0 > Reactive.Linq 2.2.5.0 1
+Reactive.Linq 2.2.5.0 Reactive.Core 2.2.5.0 1
 ```
 
 Go Berserk! and detect assemblies in more than one version
 ```
-> dep | awk -F'[- ]' '{ print $1 " " $2; print $3 " " $4 }' | awk '{ if (length(first[$1]) == 0) first[$1] = $2; if (first[$1] != $2) errors[$1] = $1; }  END{ for(e in errors) print e } '
+> dep | awk '{ print $1 " " $2; print $4 " " $5 }' | awk '{ if (length(first[$1]) == 0) first[$1] = $2; if (first[$1] != $2) errors[$1] = $1; }  END{ for(e in errors) print e } '
 
 System.Web.Http.WebHost    
 System.Web.Http            

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 using DependencyReader.CLI.Entities;
 
 namespace DependencyReader.CLI.Impl
@@ -27,20 +28,41 @@ namespace DependencyReader.CLI.Impl
         public void Log(DependencyInfo dep)
         {
             output.Write(
-                "{0}-{1} {2}-{3} {4}",
+                "{0} {1} {2} {3} {4} {5}",
                 dep.Parent.Name,
                 dep.Parent.Version,
+                VisualDistance(dep.Distance),
                 dep.Child.Name,
                 dep.Child.Version,
                 dep.Distance
             );
 
+            if (dep.Path.Count > 0)
+            {
+                output.Write(" ( ");
+            }
+
             foreach (var part in dep.Path)
             {
-                output.Write(" [{0}-{1}]", part.Name, part.Version);
+                output.Write(" {0} {1}", part.Name, part.Version);
+            }
+
+            if (dep.Path.Count > 0)
+            {
+                output.Write(" )");
             }
 
             output.Write(Environment.NewLine);
+        }
+
+        private string VisualDistance(int distance)
+        {
+            var result = new StringBuilder(distance);
+            for (int i = 0; i < distance; i++)
+            {
+                result.Append(">");
+            }
+            return result.ToString();
         }
     }
 }
