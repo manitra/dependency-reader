@@ -23,7 +23,7 @@ namespace DependencyReader.CLI.Tests.Impl
             var expected = new DependencyInfo
             {
                 Parent = new AssemblyInfo { Name = "parent", Version = "1.0" },
-                Child = new AssemblyInfo { Name = "chid", Version = "1.0" },
+                Child = new AssemblyInfo { Name = "child", Version = "1.0" },
                 Distance = 1
             };
             var target = new IndirectDependencyGenerator();

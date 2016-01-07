@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DependencyReader.CLI.Entities
 {
@@ -11,7 +13,7 @@ namespace DependencyReader.CLI.Entities
         /// The assembly which has a dependency
         /// </summary>
         public AssemblyInfo Parent { get; set; }
-        
+
         /// <summary>
         /// The assembly depended upon
         /// </summary>
@@ -28,12 +30,17 @@ namespace DependencyReader.CLI.Entities
         /// </summary>
         public IList<AssemblyInfo> Path { get; set; }
 
+        public DependencyInfo()
+        {
+            Path = new List<AssemblyInfo>();
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((DependencyInfo) obj);
+            return Equals((DependencyInfo)obj);
         }
 
         public override int GetHashCode()
@@ -41,9 +48,9 @@ namespace DependencyReader.CLI.Entities
             unchecked
             {
                 int hashCode = (Parent != null ? Parent.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (Child != null ? Child.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ Distance;
-                hashCode = (hashCode*397) ^ (Path != null ? Path.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Child != null ? Child.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Distance;
+                hashCode = (hashCode * 397) ^ (Path != null ? Path.GetHashCode() : 0);
                 return hashCode;
             }
         }
@@ -55,7 +62,13 @@ namespace DependencyReader.CLI.Entities
 
         protected bool Equals(DependencyInfo other)
         {
-            return Equals(Parent, other.Parent) && Equals(Child, other.Child) && Distance == other.Distance && Equals(Path, other.Path);
+            return
+                Equals(Parent, other.Parent)
+                && Equals(Child, other.Child)
+                && Distance == other.Distance
+                && Path
+                    .Zip(other.Path, (a, b) => new[] { a, b })
+                    .All(i => Equals(i[0], i[1]));
         }
     }
 }
