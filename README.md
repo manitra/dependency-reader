@@ -68,7 +68,10 @@ System
 
 # Build it yourself
 
-Just get the source and build the solution
+| Step    | Status |
+|----------|----------|
+| Compilation  |  [![Build Status](http://build.manitra.net/job/dependency-reader/badge/icon)](http://build.manitra.net/job/dependency-reader/)|
+| Unit tests | [![Build Status](http://build.manitra.net/job/dependency-reader-tests/badge/icon)](http://build.manitra.net/job/dependency-reader/)|
 
 ## Windows (Requires Visual Studio)
 
@@ -87,7 +90,6 @@ cd dependency-reader
 mono nuget restore src/DependencyReader.sln
 xbuild src/DependencyReader.sln
 ```
-
 
 The output is the 'bin/[ Configuration ]' folder
 
