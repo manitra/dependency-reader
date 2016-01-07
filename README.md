@@ -71,7 +71,7 @@ System
 | Step    | Status |
 |----------|----------|
 | Compilation  |  [![Build Status](http://build.manitra.net/job/dependency-reader/badge/icon)](http://build.manitra.net/job/dependency-reader/)|
-| Unit tests | [![Build Status](http://build.manitra.net/job/dependency-reader-tests/badge/icon)](http://build.manitra.net/job/dependency-reader/)|
+| Unit tests | [![Build Status](http://build.manitra.net/job/dependency-reader-tests/badge/icon)](http://build.manitra.net/job/dependency-reader-tests/)|
 
 ## Windows (Requires Visual Studio)
 
