@@ -14,11 +14,6 @@ namespace DependencyReader.CLI.Tests.Impl
     {
         private readonly Dictionary<string, string> temps = new Dictionary<string, string>();
 
-        public ReaderTests()
-        {
-            StartUp();
-        }
-
         [Test]
         public void Reader_Construction_DoesNotThrow()
         {
@@ -51,11 +46,7 @@ namespace DependencyReader.CLI.Tests.Impl
             Assert.IsTrue(result.Any(dep => dep.Child.Name == "lib1"));
         }
 
-
-        // For some reason, the attribute is ignored when using Resharper 8.1
-        // FixtureSetup is obsolete and ignored as well
-        // TODO(manitra): find out why Resharper 8.1 ignore OneTimeSetUp and FixtureSetup attributes
-        // [OneTimeSetUp]
+        [TestFixtureSetUp]
         public void StartUp()
         {
             var assembly = GetType().Assembly;
