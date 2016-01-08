@@ -61,6 +61,7 @@
     <Compile Include="Impl\LoggerTests.cs" />
     <Compile Include="Impl\ParamReaderTests.cs" />
     <Compile Include="Impl\ReaderTests.cs" />
+    <Compile Include="Impl\StyleManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Impl\RunnerTests.cs" />
   </ItemGroup>
