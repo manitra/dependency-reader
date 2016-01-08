@@ -17,17 +17,25 @@ namespace DependencyReader.CLI.Tests.Impl
                 var entity = new DependencyInfo
                 {
                     Parent = new AssemblyInfo{ Name="parent1", Version="1.0" },
-                    Child = new AssemblyInfo{ Name="child1", Version = "2.0"},
+                    Child = new AssemblyInfo{ Name="child1", Version = "3.0"},
+                    Distance = 2,
+                    Path = new []
+                    {
+                        new AssemblyInfo { Name = "intermediate1", Version = "4.0" },
+                        new AssemblyInfo { Name = "intermediate2", Version = "5.0" },
+                    }
                 };
 
                 var target = new Logger(writer, Mock.Of<IStyleManager>());
                 target.Log(entity);
                 var result = writer.ToString();
 
-                Assert.IsTrue(result.Contains(entity.Parent.Name), "Parent.Name");
-                Assert.IsTrue(result.Contains(entity.Parent.Version), "Parent.Version");
-                Assert.IsTrue(result.Contains(entity.Child.Name), "Child.Name");
-                Assert.IsTrue(result.Contains(entity.Child.Version), "Child.Version");
+                Assert.That(result.Contains(entity.Parent.Name), "Missing Parent.Name");
+                Assert.That(result.Contains(entity.Parent.Version), "Missing Parent.Version");
+                Assert.That(result.Contains(entity.Child.Name), "Missing Child.Name");
+                Assert.That(result.Contains(entity.Child.Version), "Missing Child.Version");
+                Assert.That(result.Contains(">"), "Missing visual distance");
+                Assert.That(result.Contains(string.Format("{0}", entity.Distance)), "Missing distance");
             }
         }
     }

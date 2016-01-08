@@ -82,7 +82,7 @@ namespace DependencyReader.CLI.Impl
                 {
                     Parent = new AssemblyInfo
                     {
-                        Name = pathUtility.GetFileNameWithoutExtension(assemblyFile) + "(native)",
+                        Name = "(" + pathUtility.GetFileNameWithoutExtension(assemblyFile) + ")",
                         Version = "0.0.0.0"
                     },
                     Children = new []

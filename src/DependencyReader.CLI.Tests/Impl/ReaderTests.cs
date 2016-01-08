@@ -45,6 +45,18 @@ namespace DependencyReader.CLI.Tests.Impl
             Assert.IsTrue(result.Any(dep => dep.Child.Name == "mscorlib"));
             Assert.IsTrue(result.Any(dep => dep.Child.Name == "lib1"));
         }
+        
+        [Test]
+        public void Read_BadImageDll_ReturnsSingleWithNative()
+        {
+            var target = new Reader(new PathUtility());
+
+            var result = target.Read(temps[BinaryLocator.Location + ".badimage.dll"]).ToArray();
+
+            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual("(badimage)", result.First().Parent.Name);
+            Assert.AreEqual("(unknown)", result.First().Child.Name);
+        }
 
         [TestFixtureSetUp]
         public void StartUp()

@@ -77,6 +77,9 @@
     <EmbeddedResource Include="Binaries\console1.exe" />
     <EmbeddedResource Include="Binaries\lib1.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Binaries\badimage.dll" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
