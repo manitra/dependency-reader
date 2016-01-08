@@ -11,22 +11,21 @@ namespace DependencyReader.CLI.Tests.Impl
         [SetUp]
         public void BeforeEach()
         {
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ResetColor();
         }
 
         [Test]
-        public void Set_Primary_ChangesConsoleColors()
+        [TestCase(Style.Primary)]
+        [TestCase(Style.Warning)]
+        [TestCase(Style.Error)]
+        public void Set_ChangesConsoleColors(Style style)
         {
-            var previousBack = Console.BackgroundColor;
             var previsousFore = Console.ForegroundColor;
             var target = new StyleManager();
 
-            target.Set(Style.Primary, StyleGroup.Normal);
+            target.Set(style, StyleGroup.Normal);
 
-            Assert.That(
-                previousBack != Console.BackgroundColor || previsousFore != Console.ForegroundColor,
-                "Neither the background nore the foreground color changed");
+            Assert.AreNotEqual(previsousFore, Console.ForegroundColor);
         }
     }
 }
