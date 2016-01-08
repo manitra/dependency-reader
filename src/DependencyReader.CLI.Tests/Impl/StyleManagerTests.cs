@@ -25,7 +25,14 @@ namespace DependencyReader.CLI.Tests.Impl
 
             target.Set(style, StyleGroup.Normal);
 
-            Assert.AreNotEqual(previsousFore, Console.ForegroundColor);
+            if (!Console.IsOutputRedirected)
+            {
+                Assert.AreNotEqual(previsousFore, Console.ForegroundColor);
+            }
+            else
+            {
+                Assert.Inconclusive();
+            }
         }
     }
 }
