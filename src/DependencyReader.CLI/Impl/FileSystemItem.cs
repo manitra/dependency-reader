@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DependencyReader.CLI.Tests.Fakes
+namespace DependencyReader.CLI.Impl
 {
+    /// <summary>
+    /// An in memory implementation of <see cref="IFileSystem"/>
+    /// </summary>
     public class FileSystemItem : IFileSystem
     {
         private string name;
@@ -112,7 +115,7 @@ namespace DependencyReader.CLI.Tests.Fakes
             var parts = new Queue<string>(path.Split(new[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries));
             var pointer = this;
 
-            if (parts.Count > 0 && parts.Peek() == "/")
+            if (path.StartsWith("/") || path.StartsWith("\\"))
             {
                 while (pointer.parent != null)
                     pointer = pointer.parent;

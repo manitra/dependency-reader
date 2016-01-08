@@ -51,6 +51,7 @@
     <Compile Include="Impl\FileEnumerator.cs" />
     <Compile Include="Impl\FileSystem.cs" />
     <Compile Include="IFileSystem.cs" />
+    <Compile Include="Impl\FileSystemItem.cs" />
     <Compile Include="Impl\IndirectDependencyGenerator.cs" />
     <Compile Include="Impl\Logger.cs" />
     <Compile Include="Impl\ParamReader.cs" />

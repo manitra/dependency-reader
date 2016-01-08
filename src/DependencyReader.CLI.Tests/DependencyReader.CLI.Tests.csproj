@@ -58,7 +58,7 @@
     <Compile Include="Entities\AssemblyInfoTests.cs" />
     <Compile Include="Entities\DependencyInfoTests.cs" />
     <Compile Include="Impl\FileEnumeratorTests.cs" />
-    <Compile Include="Fakes\FileSystemItem.cs" />
+    <Compile Include="Impl\FileSystemItemTests.cs" />
     <Compile Include="Impl\FileSystemTests.cs" />
     <Compile Include="Impl\IndirectDependencyGeneratorTests.cs" />
     <Compile Include="Impl\LoggerTests.cs" />
@@ -83,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Binaries\badimage.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Fakes\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

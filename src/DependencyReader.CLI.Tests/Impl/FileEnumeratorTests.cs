@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using DependencyReader.CLI.Impl;
-using DependencyReader.CLI.Tests.Fakes;
 using Moq;
 using NUnit.Framework;
 
@@ -78,6 +77,16 @@ namespace DependencyReader.CLI.Tests.Impl
             Assert.AreEqual(2, result.Length);
             Assert.AreEqual("/phones/iphone", result[0]);
             Assert.AreEqual("/phones/android", result[1]);
+        }
+
+        [Test]
+        public void ToString_ContainsImportantInfo()
+        {
+            var target = new FileSystemItem().SetName("name");
+
+            var result = target.ToString();
+
+            Assert.That(result.Contains(result));
         }
     }
 }
