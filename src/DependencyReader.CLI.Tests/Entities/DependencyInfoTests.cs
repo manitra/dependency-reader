@@ -29,8 +29,8 @@ namespace DependencyReader.CLI.Entities.Tests
             var target = new DependencyInfo();
 
             Assert.AreEqual(target, target);
-            Assert.AreNotEqual(null, target);
-            Assert.AreNotEqual(this, target);
+            Assert.IsFalse(target.Equals(null));
+            Assert.IsFalse(target.Equals(this));
         }
 
         [Test]
