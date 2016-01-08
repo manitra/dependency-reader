@@ -49,14 +49,18 @@ namespace DependencyReader.CLI.Entities
                 int hashCode = (Parent != null ? Parent.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Child != null ? Child.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ Distance;
-                hashCode = (hashCode * 397) ^ (Path != null ? Path.GetHashCode() : 0);
+                foreach (var part in Path)
+                {
+                    hashCode = (hashCode * 397) ^ (part.GetHashCode());
+                }
+
                 return hashCode;
             }
         }
 
         public override string ToString()
         {
-            return string.Format("{0} {1} {2}", Parent, Child, Distance);
+            return string.Format("{0} > {1} {2}", Parent, Child, Distance);
         }
 
         protected bool Equals(DependencyInfo other)
