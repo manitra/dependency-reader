@@ -8,11 +8,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{092C3991-B13C-4F93-9FE8-0481A8F04FC1}"
 	ProjectSection(SolutionItems) = preProject
 		..\build\build.sh = ..\build\build.sh
-		.nuget\packages.config = .nuget\packages.config
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyReader.CLI.Tests", "DependencyReader.CLI.Tests\DependencyReader.CLI.Tests.csproj", "{D62BB7B8-8F7C-46C7-A32A-D487C8E1AD99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5582808A-A4C4-4380-8C37-98099A658819}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

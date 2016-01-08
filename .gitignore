@@ -11,4 +11,4 @@ node_modules
 bower_components
 
 #generated files
-
+/src/OpenCover
