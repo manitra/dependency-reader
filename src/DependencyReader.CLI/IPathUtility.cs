@@ -20,13 +20,5 @@
         /// <param name="path"></param>
         /// <returns></returns>
         string GetFileName(string path);
-
-        /// <summary>
-        /// concatenate paths and handling missing/duplicated slashes
-        /// eg. Combine("root", "photo/", "/holidays")    =>    root/photo/holidays
-        /// </summary>
-        /// <param name="parts"></param>
-        /// <returns></returns>
-        string Combine(params string[] parts);
     }
 }

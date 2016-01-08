@@ -16,10 +16,5 @@ namespace DependencyReader.CLI.Impl
         {
             return Path.GetFileName(path);
         }
-
-        public string Combine(params string[] parts)
-        {
-            return Path.Combine(parts);
-        }
     }
 }
