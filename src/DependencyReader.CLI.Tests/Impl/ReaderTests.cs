@@ -54,7 +54,7 @@ namespace DependencyReader.CLI.Tests.Impl
             var result = target.Read(temps[BinaryLocator.Location + ".badimage.dll"]).ToArray();
 
             Assert.AreEqual(1, result.Length);
-            Assert.AreEqual("(badimage)", result.First().Parent.Name);
+            Assert.AreEqual("(" + BinaryLocator.Location + ".badimage)", result.First().Parent.Name);
             Assert.AreEqual("(unknown)", result.First().Child.Name);
         }
 
