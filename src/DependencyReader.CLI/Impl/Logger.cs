@@ -36,14 +36,19 @@ namespace DependencyReader.CLI.Impl
             Separator();
             Assembly(dep.Child);
             Separator();
+
             using (The(Style.Primary, StyleGroup.Alternative))
+            {
                 output.Write(dep.Distance);
+            }
 
             if (dep.Path.Count > 0)
             {
                 Separator();
                 using (The(Style.Primary))
+                {
                     output.Write("(");
+                }
             }
 
             foreach (var part in dep.Path)
@@ -56,7 +61,9 @@ namespace DependencyReader.CLI.Impl
             {
                 Separator();
                 using (The(Style.Primary))
+                {
                     output.Write(")");
+                }
             }
 
             NewLine();
@@ -86,11 +93,6 @@ namespace DependencyReader.CLI.Impl
             }
         }
 
-        private StyleReset The(Style style, StyleGroup group = StyleGroup.Normal)
-        {
-            return new StyleReset(style, group, this.style);
-        }
-
         private void NewLine()
         {
             output.Write(Environment.NewLine);
@@ -99,6 +101,22 @@ namespace DependencyReader.CLI.Impl
         private void Separator()
         {
             output.Write(" ");
+        }
+
+        /// <summary>
+        /// Small syntaxic sugar for using the <see cref="StyleReset"/> class.
+        /// you can write 
+        /// <code>
+        /// using (The(Style.Primary))
+        ///     output.Write("..");
+        /// </code>
+        /// </summary>
+        /// <param name="style"></param>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        private StyleReset The(Style style, StyleGroup group = StyleGroup.Normal)
+        {
+            return new StyleReset(style, group, this.style);
         }
 
         /// <summary>
