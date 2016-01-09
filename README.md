@@ -13,6 +13,8 @@ Have a look at the examples below for more info.
 
 The latest ready to use binary is available here: [dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe)
 
+[![dep.exe](http://manitra.net/wp-content/uploads/2016/01/dep-exe-output-sample.png)](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe)
+
 # Usage
 
 Download [dep.exe](http://build.manitra.net/job/dependency-reader/lastSuccessfulBuild/artifact/bin/Release/dep.exe) first.
